@@ -1,0 +1,14 @@
+---
+services:
+  bloknot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8000"
+    restart: unless-stopped
+    volumes:
+      - ./database:/var/database
+    environment:
+      DNS: /var/databases/bloknot.sqlite
+      TZ: Asia/Tbilisi

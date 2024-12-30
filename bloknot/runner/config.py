@@ -13,7 +13,7 @@ from apexdevkit.fastapi.dependable import DependableBuilder
 from apexdevkit.fastapi.name import RestfulName
 from apexdevkit.fastapi.router import RestfulRouter
 
-from bloknot.rest.notes import NoteFields, RestfulNoteBuilder
+from bloknot.infra.rest.notes import NoteFields, RestfulNoteBuilder
 from bloknot.runner.factory import InMemory, Sqlite
 
 

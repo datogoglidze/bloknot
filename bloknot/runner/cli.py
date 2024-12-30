@@ -5,6 +5,7 @@ from typer import Typer, echo
 
 from apexdevkit.server import UvicornServer
 
+from bloknot.infra.alembic import migrate_db
 from bloknot.runner.config import BloknotApi
 from bloknot.runner.factory import InMemory, Sqlite
 
@@ -23,6 +24,7 @@ def run(host: str = "0.0.0.0", port: int = 8000, root_path: str = "") -> None:
         .with_host(host)
         .and_port(port)
         .on_path(root_path)
+        .before_run(migrate_db)
         .run(BloknotApi().with_infra(infra_factory()).build())
     )
 

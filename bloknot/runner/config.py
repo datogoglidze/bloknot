@@ -7,9 +7,13 @@ from fastapi import FastAPI
 from apexdevkit.environment import value_of_env
 from apexdevkit.fastapi import (
     FastApiBuilder,
+    RestfulServiceBuilder,
 )
+from apexdevkit.fastapi.dependable import DependableBuilder
+from apexdevkit.fastapi.name import RestfulName
 from apexdevkit.fastapi.router import RestfulRouter
 
+from bloknot.rest.notes import NoteFields, RestfulNoteBuilder
 from bloknot.runner.factory import InMemory, Sqlite
 
 
@@ -20,6 +24,23 @@ class BloknotApi:
 
     def with_infra(self, value: InMemory | Sqlite) -> BloknotApi:
         self.infra = value
+
+        return self.with_notes(RestfulNoteBuilder(value))
+
+    def with_notes(self, builder: RestfulServiceBuilder) -> BloknotApi:
+        self.routes["notes"] = (
+            RestfulRouter()
+            .with_name(RestfulName("note"))
+            .with_fields(NoteFields())
+            .with_create_one_endpoint(
+                dependency=DependableBuilder().from_infra(builder)
+            )
+            .with_delete_one_endpoint(
+                dependency=DependableBuilder().from_infra(builder)
+            )
+            .with_read_all_endpoint(dependency=DependableBuilder().from_infra(builder))
+            .with_read_one_endpoint(dependency=DependableBuilder().from_infra(builder))
+        )
 
         return self
 

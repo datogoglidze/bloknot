@@ -1,0 +1,70 @@
+[tool.poetry]
+name = "bloknot"
+version = "0.1.0"
+description = "Self-hosted notebook"
+authors = ["Schwifter <d.goglidze@sangu.edu.ge>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "0.115.*"
+typer = "*"
+python-multipart = "*"
+apexdevkit = "1.18.*"
+pymssql = "2.*"
+alembic = "1.*"
+pydantic = {extras = ["email"], version = "2.*"}
+passlib = "1.7.*"
+pyjwt = "2.10.*"
+
+[tool.poetry.group.dev.dependencies]
+coverage = "*"
+faker = "*"
+pytest = "*"
+pytest-cov = "*"
+pytest-docker = "3.*"
+pytest-env = "*"
+
+[tool.poetry.group.lint.dependencies]
+mypy = "*"
+ruff = "*"
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+strict = true
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+exclude = [
+    ".git",
+    ".mypy_cache",
+    ".ruff_cache",
+    "venv",
+]
+
+lint.select = ["E", "F", "I"]
+lint.ignore = []
+lint.fixable = ["A", "B", "C", "D", "E", "F", "I"]
+lint.unfixable = []
+
+[tool.ruff.lint.isort]
+known-first-party = ["apexdevkit"]
+forced-separate = ["bloknot"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+
+[tool.coverage.run]
+branch = true
+source = [
+    "bloknot/core",
+    "bloknot/infra"
+]
+
+[tool.coverage.report]
+skip_empty = true
+skip_covered = true
+show_missing = true

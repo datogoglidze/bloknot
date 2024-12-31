@@ -23,6 +23,9 @@ class NoteFields(SchemaFields):
             .and_a(title=str | None)
         )
 
+    def writable(self) -> JsonDict:
+        return self.readable().drop("id").drop("date")
+
 
 @dataclass
 class RestfulNoteBuilder(RestfulServiceBuilder):

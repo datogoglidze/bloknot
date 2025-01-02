@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass, field
 
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
 
 from apexdevkit.environment import value_of_env
 from apexdevkit.fastapi import (
@@ -52,6 +54,14 @@ class BloknotApi:
             .with_version(value_of_env(variable="RELEASE", default="unknown"))
             .with_route(**{name: route.build() for name, route in self.routes.items()})
             .build()
+        )
+
+        api.add_middleware(
+            CORSMiddleware,
+            allow_origins=[os.getenv("FRONTEND_URL", "http://localhost:5173")],
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
         )
 
         return api

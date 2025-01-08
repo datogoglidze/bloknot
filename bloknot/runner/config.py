@@ -49,8 +49,8 @@ class BloknotApi:
     def build(self) -> FastAPI:
         api = (
             FastApiBuilder()
-            .with_title("WMS")
-            .with_description("Apex warehouse management system")
+            .with_title("Bloknot")
+            .with_description("Self-hosted notebook")
             .with_version(value_of_env(variable="RELEASE", default="unknown"))
             .with_route(**{name: route.build() for name, route in self.routes.items()})
             .build()

@@ -17,6 +17,9 @@ pydantic = {extras = ["email"], version = "2.*"}
 passlib = "1.7.*"
 pyjwt = "2.10.*"
 
+[tool.poetry.requires-plugins]
+poetry-plugin-export = ">=1.8"
+
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
 faker = "*"

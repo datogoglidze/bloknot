@@ -7,7 +7,7 @@ install:
 	poetry install
 
 lock:
-	poetry lock --no-update
+	poetry lock
 
 update:
 	poetry update

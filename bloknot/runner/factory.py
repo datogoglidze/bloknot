@@ -28,8 +28,8 @@ class Sqlite:
     def connector(self) -> SqliteInMemoryConnector | SqliteFileConnector:
         return SqliteFileConnector(self.dsn) if self.dsn else SqliteInMemoryConnector()
 
-    def notes(self) -> Repository[Note]:
-        return SqliteRepository(
+    def notes(self) -> SqliteRepository[Note]:
+        return SqliteRepository[Note](
             db=Database(self.connector),
             table=SqliteTableBuilder[Note]()
             .with_name("NOTES")

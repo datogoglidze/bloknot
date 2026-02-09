@@ -7,10 +7,10 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-fastapi = "0.115.*"
+fastapi = "0.120.*"
 typer = "*"
 python-multipart = "*"
-apexdevkit = "1.18.*"
+apexdevkit = "1.24.*"
 pymssql = "2.*"
 alembic = "1.*"
 pydantic = {extras = ["email"], version = "2.*"}

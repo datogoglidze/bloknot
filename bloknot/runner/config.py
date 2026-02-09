@@ -7,10 +7,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from apexdevkit.environment import value_of_env
-from apexdevkit.fastapi import (
-    FastApiBuilder,
-    RestfulServiceBuilder,
-)
+from apexdevkit.fastapi import FastApiBuilder, RestfulServiceBuilder
 from apexdevkit.fastapi.dependable import DependableBuilder
 from apexdevkit.fastapi.name import RestfulName
 from apexdevkit.fastapi.router import RestfulRouter
@@ -30,18 +27,16 @@ class BloknotApi:
         return self.with_notes(RestfulNoteBuilder(value))
 
     def with_notes(self, builder: RestfulServiceBuilder) -> BloknotApi:
+        dependency = DependableBuilder.from_builder(builder)
+
         self.routes["notes"] = (
             RestfulRouter()
             .with_name(RestfulName("note"))
             .with_fields(NoteFields())
-            .with_create_one_endpoint(
-                dependency=DependableBuilder().from_infra(builder)
-            )
-            .with_delete_one_endpoint(
-                dependency=DependableBuilder().from_infra(builder)
-            )
-            .with_read_all_endpoint(dependency=DependableBuilder().from_infra(builder))
-            .with_read_one_endpoint(dependency=DependableBuilder().from_infra(builder))
+            .with_create_one_endpoint(dependency=dependency)
+            .with_delete_one_endpoint(dependency=dependency)
+            .with_read_all_endpoint(dependency=dependency)
+            .with_read_one_endpoint(dependency=dependency)
         )
 
         return self

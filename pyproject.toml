@@ -15,7 +15,7 @@ pymssql = "2.*"
 alembic = "1.*"
 pydantic = {extras = ["email"], version = "2.*"}
 passlib = "1.7.*"
-pyjwt = "2.10.*"
+pyjwt = "2.12.*"
 
 [tool.poetry.requires-plugins]
 poetry-plugin-export = ">=1.8"
